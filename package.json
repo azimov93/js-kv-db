@@ -1,0 +1,41 @@
+{
+  "name": "js-kv-db",
+  "version": "1.0.0",
+  "description": "Javascript Key-Value DB",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon src/index.js --exec \"node -r dotenv/config -r babel-register --inspect\""
+  },
+  "author": "Artur Kunytskyi",
+  "license": "ISC",
+  "dependencies": {
+    "amqplib": "^0.5.6",
+    "dotenv": "^8.2.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-register": "^6.26.0",
+    "moment": "^2.25.3",
+    "nodemon": "^2.0.4",
+    "rimraf": "^3.0.2"
+  },
+  "babel": {
+    "presets": [
+      [
+        "env",
+        {
+          "targets": {
+            "node": "current"
+          }
+        }
+      ]
+    ],
+    "plugins": [
+      "transform-object-rest-spread",
+      "transform-class-properties"
+    ]
+  }
+}
