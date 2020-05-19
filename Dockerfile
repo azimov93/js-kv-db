@@ -1,0 +1,18 @@
+FROM node:12.16.0
+
+ARG DB_PORT
+ARG DB_NAME
+ARG DB_MQ_PATH
+ARG DB_INCOME_QUEUE
+ARG DB_OUTCOME_QUEUE
+ARG DB_PERSISTENCE_STORAGE
+ARG DB_LOG_PATH
+
+COPY . /app/
+WORKDIR /app/
+
+RUN npm install
+RUN npm run -s build
+
+EXPOSE $DB_PORT
+CMD [ "npm", "run", "start:prod" ]

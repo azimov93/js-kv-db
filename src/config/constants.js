@@ -6,7 +6,6 @@ export default {
 	DB: {
 		PORT: process.env.DB_PORT,
 		NAME: process.env.DB_NAME,
-		PERSISTENCE_TIMEOUT: process.env.DB_PERSISTENCE_TIMEOUT,
 		PERSISTENCE_STORAGE: process.env.DB_PERSISTENCE_STORAGE || 'storage/',
 	},
 	MQ: {

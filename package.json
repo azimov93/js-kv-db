@@ -4,7 +4,11 @@
   "description": "Javascript Key-Value DB",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon src/index.js --exec \"node -r dotenv/config -r babel-register --inspect\""
+    "start": "nodemon src/index.js --exec \"node -r dotenv/config -r babel-register --inspect\"",
+    "preprod": "npm run -s build",
+    "start:prod": "node -r dotenv/config dist/index.js",
+    "clean": "rimraf dist",
+    "build": "npm run clean && mkdir -p dist && babel src -s -D -d dist"
   },
   "author": "Artur Kunytskyi",
   "license": "ISC",
