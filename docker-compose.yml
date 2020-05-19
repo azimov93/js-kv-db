@@ -1,19 +1,20 @@
 version: '3'
 
 services:
-  image: your_js_db
-  container_name: your_js_db
-  environment:
-    - DB_PORT=3000
-    - DB_NAME=db
-    - DB_MQ_PATH=amqp://localhost:32771
-    - DB_INCOME_QUEUE=config.INCOME_QUEUE
-    - DB_OUTCOME_QUEUE=config.OUTCOME_QUEUE
-    - DB_PERSISTENCE_STORAGE=storage/
-    - DB_LOG_PATH=logs/
-  ports:
-    - "3000:3000"
-  volumes:
-    - "./db_storage/:/app/storage/"
-    - "./db_logs/:/app/logs/"
+  database:
+    image: jsdb
+    container_name: jsdb
+    environment:
+      - DB_PORT=3000
+      - DB_NAME=db
+      - DB_MQ_PATH=amqp://rabbitmq:32771
+      - DB_INCOME_QUEUE=config.INCOME_QUEUE
+      - DB_OUTCOME_QUEUE=config.OUTCOME_QUEUE
+      - DB_PERSISTENCE_STORAGE=storage/
+      - DB_LOG_PATH=logs/
+    ports:
+      - "3000:3000"
+    volumes:
+      - "./db_storage/:/app/storage/"
+      - "./db_logs/:/app/logs/"
   
