@@ -2,6 +2,7 @@ import path from 'path';
 
 export default {
 	MAIN_DIRECTORY: path.join(__dirname, '../../'),
+	LOG_DIRECTORY: process.env.DB_LOG_PATH || 'logs/',
 	DB: {
 		PORT: process.env.DB_PORT,
 		NAME: process.env.DB_NAME,

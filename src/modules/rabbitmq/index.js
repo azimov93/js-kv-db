@@ -1,5 +1,6 @@
 import amqp from 'amqplib';
 import CONSTANTS from '../../config/constants';
+import { logger } from '../logger';
 
 class MqModule {
 	constructor(params = { 
@@ -19,9 +20,9 @@ class MqModule {
 			this.connection = await amqp.connect(this.url);
 			this.channel = await this.connection.createChannel();
 
-			console.error('RabbitMQ connected!');
+			logger.info(`[${this.type}] RabbitMQ connected!`)
 		} catch (e) {
-			console.error('RabbitMQ connection error => ', e);
+			logger.error(e);
 			throw new Error(e);
 		}
 
@@ -32,9 +33,11 @@ class MqModule {
 		try {
 			const options = { durable: true, noAck: true };
 			await this.channel.assertQueue(this.queueName, options);
-			await this.channel.consume(this.queueName, callback);
+			await this.channel.consume(this.queueName, (data) => {
+				callback(data, this.channel);
+			});
 		} catch (e) {
-			console.error('Error => ', e);
+			logger.error(e);
 			throw new Error(e);
 		}
 	}
@@ -48,10 +51,8 @@ class MqModule {
 
 			await this.channel.assertQueue(this.queueName, options);
 			await this.channel.sendToQueue(this.queueName, bufferedData);
-
-			console.error('New data was sent to queue!');
 		} catch (e) {
-			console.error('Error => ', e);
+			logger.error(e);
 			throw new Error(e);
 		}
 	};
@@ -59,7 +60,7 @@ class MqModule {
 	close = () => {
 		this.connection.close();
 
-		console.error('RabbitMQ disconnected!');
+		logger.info(`[${this.type}] RabbitMQ disconnected!`);
 	}
 }
 

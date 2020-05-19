@@ -1,5 +1,6 @@
 import fs from 'fs';
 import CONSTANTS from '../../config/constants';
+import { logger } from '../logger';
 
 export const readFromFile = (fileName) => {
 	const pathName = `${ CONSTANTS.MAIN_DIRECTORY }${ CONSTANTS.DB.PERSISTENCE_STORAGE }${ fileName }`;
@@ -7,7 +8,7 @@ export const readFromFile = (fileName) => {
 	const stream = fs.createReadStream(pathName);
 
 	stream.on('end', () => {
-		console.log(`${fileName} was processed`);
+		logger.info(`${fileName} was processed`)
 	});
 	
 	return new Promise((resolve, reject) => {
@@ -22,10 +23,10 @@ export const readFromFile = (fileName) => {
 
 		stream.on('error', (err) => {
 			if (err.code === 'ENOENT'){
-				console.log(`File ${fileName} not found`);
+				logger.info(`File ${fileName} not found`);
 				reject(`File ${fileName} not found`);
 			} else {
-				console.error(err);
+				logger.error(err);
 				reject(err);
 			}
 		});
